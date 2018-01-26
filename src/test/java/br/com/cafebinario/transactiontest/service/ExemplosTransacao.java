@@ -44,16 +44,20 @@ public class ExemplosTransacao {
 	}
 	
 	@Test
-	@Transactional
 	public void testExemplo2() {
 		transactionService.deleteAll();
+		
+		final Long count = transactionService.count();
+		Assert.assertEquals(0L, count.longValue());
+	}
+	
+	@Transactional
+	public void testExemplo2Transaction() {
 		try {
 			transactionService.exemploTransacao2();
 		}catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		final Long count = transactionService.count();
-		Assert.assertEquals(0L, count.longValue());
 	}
 	
 	@Test

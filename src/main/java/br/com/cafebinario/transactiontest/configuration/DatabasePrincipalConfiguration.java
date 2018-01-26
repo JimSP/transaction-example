@@ -39,6 +39,10 @@ public class DatabasePrincipalConfiguration {
 
 	@Value("${principal.datasource.showSql:false}")
 	private Boolean showSql;
+	
+	@Value("${principal.jpa.generateDdl:create}")
+	private String generateDDl;
+
 
 	@Primary
 	@Bean(name = "principalEntityManagerFactory")
@@ -63,6 +67,10 @@ public class DatabasePrincipalConfiguration {
 
 	@Bean("principalProperties")
 	public Properties principalProperties() {
-		return DatabaseConfigurationHelper.properties(dialect);
+		final Properties properties = DatabaseConfigurationHelper.properties(dialect);
+		properties.put("hibernate.hbm2ddl.auto", generateDDl);
+		properties.put("spring.jpa.show-sql", String.valueOf(showSql));
+
+		return properties;
 	}
 }

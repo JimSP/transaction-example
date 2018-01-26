@@ -37,6 +37,9 @@ public class DatabaseSecundaryConfiguration {
 	@Value("${secundary.datasource.showSql:false}")
 	private Boolean showSql;
 
+	@Value("${secundary.jpa.generateDdl:create}")
+	private String generateDDl;
+
 	@Bean(name = "secundaryEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean principalEntityManagerFactory() throws SQLException {
 		final Properties properties = secundaryProperties();
@@ -57,6 +60,10 @@ public class DatabaseSecundaryConfiguration {
 
 	@Bean("secundaryProperties")
 	public Properties secundaryProperties() {
-		return DatabaseConfigurationHelper.properties(dialect);
+		final Properties properties = DatabaseConfigurationHelper.properties(dialect);
+		properties.put("hibernate.hbm2ddl.auto", generateDDl);
+		properties.put("spring.jpa.show-sql", String.valueOf(showSql));
+
+		return properties;
 	}
 }

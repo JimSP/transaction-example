@@ -37,7 +37,7 @@ public class TransactionService {
 		saveAWithError();
 	}
 
-	@Transactional(propagation = Propagation.NESTED, rollbackFor = RuntimeException.class)
+	@Transactional
 	public void exemploTransacao2() {
 		saveA();
 		saveBWithError();

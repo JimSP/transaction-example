@@ -26,7 +26,6 @@ public final class DatabaseConfigurationHelper {
 	protected static Properties properties(final String dialect) {
 		final Properties properties = new Properties();
 		properties.setProperty(DIALECT, dialect);
-		properties.put("hibernate.hbm2ddl.auto", "update");
 		return properties;
 	}
 
